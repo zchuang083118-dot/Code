@@ -1,0 +1,52 @@
+#ifndef ASLAM_SCALAR_EXPRESSION_HPP
+#define ASLAM_SCALAR_EXPRESSION_HPP
+
+#include <Eigen/Core>
+#include <aslam/backend/JacobianContainer.hpp>
+#include <memory>
+#include <set>
+
+namespace aslam {
+namespace backend {
+class ScalarExpressionNode;
+
+class ScalarExpression {
+ public:
+  typedef double Value;
+  ScalarExpression(double value);
+  ScalarExpression(ScalarExpressionNode* designVariable);
+  ScalarExpression(std::shared_ptr<ScalarExpressionNode> designVariable);
+  ~ScalarExpression();
+
+  double toScalar() const;
+  double toValue() const { return toScalar(); }
+
+  void evaluateJacobians(JacobianContainer& outJacobians) const;
+  void evaluateJacobians(JacobianContainer& outJacobians,
+                         const Eigen::MatrixXd& applyChainRule) const;
+  void getDesignVariables(DesignVariable::set_t& designVariables) const;
+
+  std::shared_ptr<ScalarExpressionNode> root() { return _root; }
+
+  ScalarExpression operator+(const ScalarExpression& s);
+  ScalarExpression operator-(const ScalarExpression& s);
+  ScalarExpression operator*(const ScalarExpression& s);
+  ScalarExpression operator/(const ScalarExpression& s);
+  ScalarExpression operator+(double s);
+  ScalarExpression operator-(double s);
+  ScalarExpression operator*(double s);
+  ScalarExpression operator/(double s);
+
+ private:
+  /// \todo make the default constructor private.
+  ScalarExpression();
+
+  std::shared_ptr<ScalarExpressionNode> _root;
+
+  friend class EuclideanExpression;
+};
+
+}  // namespace backend
+}  // namespace aslam
+
+#endif /* ASLAM_SCALAR_EXPRESSION_HPP */
