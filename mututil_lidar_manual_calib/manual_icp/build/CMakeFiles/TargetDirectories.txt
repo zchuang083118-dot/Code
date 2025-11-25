@@ -1,0 +1,3 @@
+/home/zchuang/ubt_calicate/calicate/scripts/manual_icp/build/CMakeFiles/manual_icp.dir
+/home/zchuang/ubt_calicate/calicate/scripts/manual_icp/build/CMakeFiles/edit_cache.dir
+/home/zchuang/ubt_calicate/calicate/scripts/manual_icp/build/CMakeFiles/rebuild_cache.dir
